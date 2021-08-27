@@ -33,6 +33,18 @@ export default function SignIn() {
           </Link>
         </Text>
       </Box>
+
+      <Text position="absolute" bottom={1} color="white">
+        Góp ý, báo lỗi
+        <Link
+          textDecoration="underline"
+          href="mailto:dvn281002@gmail.com"
+          mx={1}
+        >
+          tại đây
+        </Link>
+        nha 💖
+      </Text>
     </Center>
   )
 }
