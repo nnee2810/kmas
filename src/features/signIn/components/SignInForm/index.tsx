@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
-import useSignIn from "hooks/useSignIn"
+import useAuth from "hooks/useAuth"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import {
@@ -26,7 +26,7 @@ export default function SignInForm() {
     formState: { errors },
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
-  const { signIn, signInLoading } = useSignIn()
+  const { signIn, signInLoading } = useAuth()
 
   const onSubmit = ({ username, password }: any) => {
     signIn({ username, password })

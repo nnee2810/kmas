@@ -1,6 +1,7 @@
-import LoadingScreen from "components/LoadingScreen"
 import NotFoundScreen from "components/NotFoundScreen"
 import signInRoutes from "features/signIn/routes"
+import { useAppSelector } from "hooks/useAppStore"
+import HomeLayout from "layouts/Home"
 import { Helmet } from "react-helmet"
 import {
   BrowserRouter as Router,
@@ -8,6 +9,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom"
+import { userSelector } from "store/reducers/user"
 import AppRoute from "types/IAppRoute"
 
 const routes: AppRoute[] = [
@@ -15,13 +17,15 @@ const routes: AppRoute[] = [
     name: "Home",
     path: "/app",
     exact: false,
-    component: LoadingScreen,
+    component: HomeLayout,
     requireAuth: true,
   },
   ...signInRoutes,
 ]
 
 export default function AppRouter() {
+  const { token } = useAppSelector(userSelector)
+
   return (
     <Router>
       <Switch>
@@ -34,6 +38,9 @@ export default function AppRouter() {
             exact={route.exact}
             render={() => (
               <>
+                {route.requireAuth
+                  ? !token && <Redirect to="/signin" />
+                  : token && <Redirect to="/app" />}
                 <Helmet titleTemplate="KMAS | %s" title={route.name} />
                 <route.component />
               </>

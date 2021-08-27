@@ -3,7 +3,7 @@ import API from "configs/network"
 import toastConfig from "configs/toast"
 import md5 from "md5"
 import { useState } from "react"
-import { SIGN_IN } from "store/reducers/user"
+import { SIGN_IN, SIGN_OUT } from "store/reducers/user"
 import { useAppDispatch } from "./useAppStore"
 
 interface SignInProps {
@@ -11,7 +11,7 @@ interface SignInProps {
   password: string
 }
 
-export default function useSignIn() {
+export default function useAuth() {
   const [signInLoading, setSignInLoading] = useState(false)
   const toast = useToast()
   const dispatch = useAppDispatch()
@@ -53,6 +53,14 @@ export default function useSignIn() {
       })
     setSignInLoading(false)
   }
+  const signOut = () => {
+    toast({
+      ...toastConfig,
+      title: "Bye bye 👋",
+      status: "success",
+    })
+    dispatch(SIGN_OUT({}))
+  }
 
-  return { signIn, signInLoading }
+  return { signIn, signOut, signInLoading }
 }
