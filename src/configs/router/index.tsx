@@ -1,14 +1,9 @@
 import NotFoundScreen from "components/NotFoundScreen"
 import Routes from "components/Routes"
+import AppRoute from "defines/IAppRoute"
 import signInRoutes from "features/signIn/routes"
 import HomeLayout from "layouts/Home"
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom"
-import AppRoute from "types/IAppRoute"
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom"
 
 const routes: AppRoute[] = [
   {
@@ -18,18 +13,21 @@ const routes: AppRoute[] = [
     requireAuth: true,
   },
   ...signInRoutes,
+  {
+    path: "*",
+    component: NotFoundScreen,
+    exact: false,
+    requireAuth: false,
+  },
 ]
 
 export default function AppRouter() {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/app" />
-        </Route>
-        <Routes routes={routes} />
-        <Route path="*" component={NotFoundScreen} />
-      </Switch>
+      <Route path="/" exact>
+        <Redirect to="/app" />
+      </Route>
+      <Routes routes={routes} />
     </Router>
   )
 }

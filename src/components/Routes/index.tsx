@@ -1,37 +1,30 @@
+import AppRoute from "defines/IAppRoute"
 import { useAppSelector } from "hooks/useAppStore"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Redirect, Route } from "react-router-dom"
+import { Redirect, Route, Switch } from "react-router-dom"
 import { userSelector } from "store/reducers/user"
-import AppRoute from "types/IAppRoute"
 
 interface RoutesProps {
   routes: AppRoute[]
 }
 
 export default function Routes({ routes }: RoutesProps) {
-  const { token } = useAppSelector(userSelector)
+  const { signedIn } = useAppSelector(userSelector)
 
   return (
-    <>
+    <Switch>
       {routes.map((route, idx) => (
-        <Route
-          path={route.path}
-          exact={route.exact}
-          render={() => (
-            <>
-              {route.requireAuth
-                ? !token && <Redirect to="/signin" />
-                : token && <Redirect to="/app" />}
-              {route.name && (
-                <Helmet titleTemplate="KMAS | %s" title={route.name} />
-              )}
-              <route.component />
-            </>
+        <Route path={route.path} exact={route.exact} key={"route" + idx}>
+          {route.requireAuth
+            ? !signedIn && <Redirect to="/signin" />
+            : signedIn && <Redirect to="/app" />}
+          {route.name && (
+            <Helmet titleTemplate="KMAS | %s" title={route.name} />
           )}
-          key={"route" + idx}
-        />
+          <route.component />
+        </Route>
       ))}
-    </>
+    </Switch>
   )
 }

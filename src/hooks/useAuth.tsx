@@ -3,7 +3,7 @@ import toastConfig from "configs/toast"
 import md5 from "md5"
 import { useState } from "react"
 import postSignIn from "services/postSignIn"
-import { SIGN_IN, SIGN_OUT } from "store/reducers/user"
+import { setSignIn, setSignOut } from "store/reducers/user"
 import { useAppDispatch } from "./useAppStore"
 
 export interface SignInProps {
@@ -28,7 +28,7 @@ export default function useAuth() {
               status: "success",
             })
             const token = res.data.token
-            dispatch(SIGN_IN(token))
+            dispatch(setSignIn(token))
             break
           }
           case 401: {
@@ -59,7 +59,7 @@ export default function useAuth() {
       title: "Bye bye 👋",
       status: "success",
     })
-    dispatch(SIGN_OUT({}))
+    dispatch(setSignOut({}))
   }
 
   return { signIn, signOut, signInLoading }

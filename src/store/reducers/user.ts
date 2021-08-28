@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { REFRESH_TOKEN, TOKEN } from "defines/common"
+import Cookies from "js-cookie"
 import { RootState } from "store"
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
+  signedIn: false,
   profile: {
     displayName: null,
     studentCode: null,
@@ -11,21 +13,24 @@ const initialState = {
   },
 }
 
-const slice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    SIGN_IN(state, { payload }) {
-      state.token = payload
-      localStorage.setItem("token", payload)
+    setSignIn(state, { payload }) {
+      const { profile, token, refreshToken } = payload
+      state.signedIn = true
+      state.profile = profile
+      Cookies.set(TOKEN, token)
+      Cookies.set(REFRESH_TOKEN, refreshToken)
     },
-    SIGN_OUT(state, { payload }) {
-      state.token = null
-      localStorage.removeItem("token")
+    setSignOut(state, { payload }) {
+      Cookies.remove(TOKEN)
+      Cookies.remove(REFRESH_TOKEN)
     },
   },
 })
 
 export const userSelector = (state: RootState) => state.user
-export const { SIGN_IN, SIGN_OUT } = slice.actions
-export default slice.reducer
+export const { setSignIn, setSignOut } = userSlice.actions
+export default userSlice.reducer

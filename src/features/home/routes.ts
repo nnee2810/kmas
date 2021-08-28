@@ -1,4 +1,4 @@
-import AppRoute from "types/IAppRoute"
+import AppRoute from "defines/IAppRoute"
 import Home from "."
 
 const homeRoutes: AppRoute[] = [
