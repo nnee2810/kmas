@@ -1,13 +1,11 @@
-import { Button } from "@chakra-ui/react"
-import useAuth from "hooks/useAuth"
-import React from "react"
+import LoadingScreen from "components/LoadingScreen"
+import React, { Suspense } from "react"
+import HomeLayoutRouter from "./router"
 
 export default function HomeLayout() {
-  const { signOut } = useAuth()
-
   return (
-    <Button colorScheme="red" onClick={signOut}>
-      Sign out
-    </Button>
+    <Suspense fallback={<LoadingScreen />}>
+      <HomeLayoutRouter />
+    </Suspense>
   )
 }

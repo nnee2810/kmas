@@ -1,7 +1,7 @@
 import AppRoute from "types/IAppRoute"
 import SignIn from "."
 
-const routes: AppRoute[] = [
+const signInRoutes: AppRoute[] = [
   {
     name: "Sign in",
     component: SignIn,
@@ -11,4 +11,4 @@ const routes: AppRoute[] = [
   },
 ]
 
-export default routes
+export default signInRoutes

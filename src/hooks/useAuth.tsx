@@ -1,12 +1,12 @@
 import { useToast } from "@chakra-ui/react"
-import API from "configs/network"
 import toastConfig from "configs/toast"
 import md5 from "md5"
 import { useState } from "react"
+import postSignIn from "services/postSignIn"
 import { SIGN_IN, SIGN_OUT } from "store/reducers/user"
 import { useAppDispatch } from "./useAppStore"
 
-interface SignInProps {
+export interface SignInProps {
   username: string
   password: string
 }
@@ -18,7 +18,7 @@ export default function useAuth() {
 
   const signIn = async ({ username, password }: SignInProps) => {
     setSignInLoading(true)
-    await API.post("/signin", { username, password: md5(password) })
+    await postSignIn({ username, password: md5(password) })
       .then((res) => {
         switch (res.status) {
           case 200: {
