@@ -1,7 +1,7 @@
 import { Box, Center, Link, Text } from "@chakra-ui/react"
 import TextLogo from "components/TextLogo"
 import React from "react"
-import SignInForm from "./components/SignInForm"
+import LoginForm from "./components/LoginForm"
 
 const boxShadow = `0 2.8px 2.2px rgba(0, 0, 0, 0.02),
   0 6.7px 5.3px rgba(0, 0, 0, 0.028),
@@ -10,7 +10,7 @@ const boxShadow = `0 2.8px 2.2px rgba(0, 0, 0, 0.02),
   0 41.8px 33.4px rgba(0, 0, 0, 0.05),
   0 100px 80px rgba(0, 0, 0, 0.07)`
 
-export default function SignIn() {
+export default function Login() {
   return (
     <Center
       bg="linear-gradient(
@@ -22,7 +22,7 @@ export default function SignIn() {
       <Box bg="white" px={8} py={12} borderRadius={4} boxShadow={boxShadow}>
         <TextLogo />
         <Box mt={5} width="350px">
-          <SignInForm />
+          <LoginForm />
         </Box>
         <Text mt={3} align="right">
           <Link

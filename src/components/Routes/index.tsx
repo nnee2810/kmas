@@ -10,15 +10,15 @@ interface RoutesProps {
 }
 
 export default function Routes({ routes }: RoutesProps) {
-  const { signedIn } = useAppSelector(userSelector)
+  const { loggedIn } = useAppSelector(userSelector)
 
   return (
     <Switch>
       {routes.map((route, idx) => (
         <Route path={route.path} exact={route.exact} key={"route" + idx}>
           {route.requireAuth
-            ? !signedIn && <Redirect to="/signin" />
-            : signedIn && <Redirect to="/app" />}
+            ? !loggedIn && <Redirect to="/login" />
+            : loggedIn && <Redirect to="/app" />}
           {route.name && (
             <Helmet titleTemplate="KMAS | %s" title={route.name} />
           )}

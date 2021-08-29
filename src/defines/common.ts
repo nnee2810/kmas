@@ -1,4 +1,6 @@
 const TOKEN = "token",
-  REFRESH_TOKEN = "refreshToken"
+  REFRESH_TOKEN = "refreshToken",
+  HTTP_OK = 200,
+  HTTP_UNAUTHORIZED = 401
 
-export { TOKEN, REFRESH_TOKEN }
+export { TOKEN, REFRESH_TOKEN, HTTP_OK, HTTP_UNAUTHORIZED }

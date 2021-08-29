@@ -9,27 +9,26 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
+import { useAppSelector } from "hooks/useAppStore"
 import useAuth from "hooks/useAuth"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
-import {
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-  AiOutlineUser,
-} from "react-icons/ai"
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineUser } from "react-icons/ai"
 import { FiLock } from "react-icons/fi"
+import { userSelector } from "store/reducers/user"
 
-export default function SignInForm() {
+export default function LoginForm() {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
-  const { signIn, signInLoading } = useAuth()
+  const { login } = useAuth()
+  const { postLoginLoading } = useAppSelector(userSelector)
 
   const onSubmit = ({ username, password }: any) => {
-    signIn({ username, password })
+    login({ username, password })
   }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
 
@@ -45,7 +44,7 @@ export default function SignInForm() {
               placeholder="Mã sinh viên"
               focusBorderColor="green.500"
               isInvalid={!!errors.username}
-              disabled={signInLoading}
+              disabled={postLoginLoading}
               {...register("username", {
                 required: {
                   value: true,
@@ -70,7 +69,7 @@ export default function SignInForm() {
               type={showPassword ? "text" : "password"}
               focusBorderColor="green.500"
               isInvalid={!!errors.password}
-              disabled={signInLoading}
+              disabled={postLoginLoading}
               {...register("password", {
                 required: {
                   value: true,
@@ -79,10 +78,7 @@ export default function SignInForm() {
                 maxLength: { value: 32, message: "Mật khẩu không hợp lệ" },
               })}
             />
-            <InputRightElement
-              cursor="pointer"
-              onClick={handleClickShowPassword}
-            >
+            <InputRightElement cursor="pointer" onClick={handleClickShowPassword}>
               {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
             </InputRightElement>
           </InputGroup>
@@ -90,8 +86,8 @@ export default function SignInForm() {
             {errors?.password?.message}
           </Text>
         </Box>
-        <Button colorScheme="green" type="submit" disabled={signInLoading}>
-          {signInLoading ? <Spinner size="sm" /> : "Đăng nhập"}
+        <Button colorScheme="green" type="submit" disabled={postLoginLoading}>
+          {postLoginLoading ? <Spinner size="sm" /> : "Đăng nhập"}
         </Button>
       </Stack>
     </form>

@@ -3,6 +3,8 @@ import { ThemeProvider } from "@emotion/react"
 import LoadingScreen from "components/LoadingScreen"
 import AppRouter from "configs/router"
 import React, { Suspense } from "react"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import { GlobalStyle } from "styles"
 import lightTheme from "styles/theme/light"
 
@@ -10,6 +12,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <ToastContainer />
       <ThemeProvider theme={lightTheme}>
         <ChakraProvider>
           <Suspense fallback={<LoadingScreen />}>

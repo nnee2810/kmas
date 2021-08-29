@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
   }
 
-  #root > div {
+  #root > div:last-child {
     height: 100vh;
   }
 `
