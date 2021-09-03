@@ -19,9 +19,7 @@ export default function Routes({ routes }: RoutesProps) {
           {route.requireAuth
             ? !loggedIn && <Redirect to="/login" />
             : loggedIn && <Redirect to="/app" />}
-          {route.name && (
-            <Helmet titleTemplate="KMAS | %s" title={route.name} />
-          )}
+          {route.name && <Helmet titleTemplate="KMAS | %s" title={route.name} />}
           <route.component />
         </Route>
       ))}

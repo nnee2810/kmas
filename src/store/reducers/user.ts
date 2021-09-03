@@ -21,36 +21,30 @@ export const postLogin = createAsyncThunk(
       const res = await API.post("/login", { username, password: md5(password) })
       return res
     } catch (err) {
-      console.log(err)
-
       return rejectWithValue(1)
     }
   }
 )
 
-const initialState = {
-  postLoginLoading: false,
-  loggedIn: false,
-  profile: {
-    displayName: "",
-    studentCode: "",
-    gender: "",
-    birthday: "",
-  },
-}
-
 const userSlice = createSlice({
   name: "user",
-  initialState,
+  initialState: {
+    loggedIn: false,
+    profile: {
+      displayName: "",
+      studentCode: "",
+      gender: "",
+      birthday: "",
+    },
+  },
   reducers: {
     setLogout(state, { payload }) {
+      state.loggedIn = false
+      toast.success("Bye bye 👋")
       localStorage.removeItem(TOKEN)
     },
   },
   extraReducers: {
-    [postLogin.pending.toString()]: (state) => {
-      state.postLoginLoading = true
-    },
     [postLogin.fulfilled.toString()]: (state, { payload }) => {
       switch (payload.status) {
         case HTTP_OK: {
@@ -72,11 +66,9 @@ const userSlice = createSlice({
         default:
           break
       }
-      state.postLoginLoading = false
     },
     [postLogin.rejected.toString()]: (state, { payload }) => {
       toast.error("Đã có lỗi xảy ra")
-      state.postLoginLoading = false
     },
 
     [fetchLogin.fulfilled.toString()]: (state, { payload }) => {
@@ -89,11 +81,12 @@ const userSlice = createSlice({
           state.loggedIn = true
           state.profile = profile
           localStorage.setItem(TOKEN, token)
-          toast.success("✨")
+          toast.success("Welcome back ✨")
           break
         }
         case HTTP_UNAUTHORIZED: {
           toast.error("Phiên đăng nhập không hợp lệ")
+          localStorage.removeItem(TOKEN)
           break
         }
         default:

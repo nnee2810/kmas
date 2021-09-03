@@ -9,13 +9,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
-import { useAppSelector } from "hooks/useAppStore"
 import useAuth from "hooks/useAuth"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineUser } from "react-icons/ai"
 import { FiLock } from "react-icons/fi"
-import { userSelector } from "store/reducers/user"
 
 export default function LoginForm() {
   const {
@@ -24,11 +22,12 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { login } = useAuth()
-  const { postLoginLoading } = useAppSelector(userSelector)
 
   const onSubmit = ({ username, password }: any) => {
-    login({ username, password })
+    setLoading(true)
+    login({ username, password }).then((res) => setLoading(false))
   }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
 
@@ -44,7 +43,7 @@ export default function LoginForm() {
               placeholder="Mã sinh viên"
               focusBorderColor="green.500"
               isInvalid={!!errors.username}
-              disabled={postLoginLoading}
+              disabled={loading}
               {...register("username", {
                 required: {
                   value: true,
@@ -69,7 +68,7 @@ export default function LoginForm() {
               type={showPassword ? "text" : "password"}
               focusBorderColor="green.500"
               isInvalid={!!errors.password}
-              disabled={postLoginLoading}
+              disabled={loading}
               {...register("password", {
                 required: {
                   value: true,
@@ -86,8 +85,8 @@ export default function LoginForm() {
             {errors?.password?.message}
           </Text>
         </Box>
-        <Button colorScheme="green" type="submit" disabled={postLoginLoading}>
-          {postLoginLoading ? <Spinner size="sm" /> : "Đăng nhập"}
+        <Button colorScheme="green" type="submit" disabled={loading}>
+          {loading ? <Spinner size="sm" /> : "Đăng nhập"}
         </Button>
       </Stack>
     </form>

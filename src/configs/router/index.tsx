@@ -7,7 +7,7 @@ import loginRoutes from "features/login/routes"
 import { useAppDispatch } from "hooks/useAppStore"
 import HomeLayout from "layouts/Home"
 import { useEffect, useState } from "react"
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom"
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import { fetchLogin } from "store/reducers/user"
 
 const routes: AppRoute[] = [
@@ -18,12 +18,6 @@ const routes: AppRoute[] = [
     requireAuth: true,
   },
   ...loginRoutes,
-  {
-    path: "*",
-    component: NotFoundScreen,
-    exact: false,
-    requireAuth: false,
-  },
 ]
 
 export default function AppRouter() {
@@ -38,11 +32,16 @@ export default function AppRouter() {
   return loading ? (
     <LoadingScreen />
   ) : (
-    <Router>
-      <Route path="/" exact>
-        <Redirect to="/app" />
-      </Route>
-      <Routes routes={routes} />
-    </Router>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/app" />
+        </Route>
+        <Routes routes={routes} />
+        <Route path="*">
+          <NotFoundScreen />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   )
 }

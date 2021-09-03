@@ -1,5 +1,5 @@
 import { Box, Center, Link, Text } from "@chakra-ui/react"
-import TextLogo from "components/TextLogo"
+import LogoText from "components/LogoText"
 import React from "react"
 import LoginForm from "./components/LoginForm"
 
@@ -20,7 +20,7 @@ export default function Login() {
     )"
     >
       <Box bg="white" px={8} py={12} borderRadius={4} boxShadow={boxShadow}>
-        <TextLogo />
+        <LogoText />
         <Box mt={5} width="350px">
           <LoginForm />
         </Box>
@@ -36,11 +36,7 @@ export default function Login() {
 
       <Text position="absolute" bottom={1} color="white">
         Góp ý, báo lỗi
-        <Link
-          textDecoration="underline"
-          href="mailto:dvn281002@gmail.com"
-          mx={1}
-        >
+        <Link textDecoration="underline" href="mailto:dvn281002@gmail.com" mx={1}>
           tại đây
         </Link>
         nha 💖
