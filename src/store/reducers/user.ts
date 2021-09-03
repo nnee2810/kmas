@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import API from "configs/network"
-import { HTTP_OK, HTTP_UNAUTHORIZED, TOKEN } from "defines/common"
+import { HTTP_NOT_FOUND, HTTP_OK, HTTP_UNAUTHORIZED, TOKEN } from "defines/common"
 import { LoginProps } from "hooks/useAuth"
 import md5 from "md5"
 import { toast } from "react-toastify"
@@ -61,6 +61,10 @@ const userSlice = createSlice({
         }
         case HTTP_UNAUTHORIZED: {
           toast.error("Tài khoản hoặc mật khẩu không chính xác")
+          break
+        }
+        case HTTP_NOT_FOUND: {
+          toast.error("Máy chủ KMA không hoạt động")
           break
         }
         default:
