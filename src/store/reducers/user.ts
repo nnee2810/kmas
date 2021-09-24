@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import API from "configs/network"
-import { HTTP_NOT_FOUND, HTTP_OK, HTTP_UNAUTHORIZED, TOKEN } from "defines/common"
+import { HTTP_OK, HTTP_SERVICE_UNAVAILABLE, HTTP_UNAUTHORIZED, TOKEN } from "defines/common"
 import { LoginProps } from "hooks/useAuth"
 import md5 from "md5"
 import { toast } from "react-toastify"
@@ -16,9 +16,9 @@ export const fetchLogin = createAsyncThunk("user/fetchLogin", async (_, { reject
 })
 export const postLogin = createAsyncThunk(
   "user/postLogin",
-  async ({ username, password }: LoginProps, { rejectWithValue }) => {
+  async ({ studentCode, password }: LoginProps, { rejectWithValue }) => {
     try {
-      const res = await API.post("/login", { username, password: md5(password) })
+      const res = await API.post("/login", { studentCode, password: md5(password) })
       return res
     } catch (err) {
       return rejectWithValue(1)
@@ -31,10 +31,8 @@ const userSlice = createSlice({
   initialState: {
     loggedIn: false,
     profile: {
-      displayName: "",
+      fullName: "",
       studentCode: "",
-      gender: "",
-      birthday: "",
     },
   },
   reducers: {
@@ -49,13 +47,13 @@ const userSlice = createSlice({
       switch (payload.status) {
         case HTTP_OK: {
           const {
-            data: { profile, token },
+            data: { token, profile },
           } = payload
 
           state.loggedIn = true
           state.profile = profile
           localStorage.setItem(TOKEN, token)
-          toast.success(`Xin chào ${profile.displayName}`)
+          toast.success(`Xin chào ${profile.fullName}`)
 
           break
         }
@@ -63,8 +61,8 @@ const userSlice = createSlice({
           toast.error("Tài khoản hoặc mật khẩu không chính xác")
           break
         }
-        case HTTP_NOT_FOUND: {
-          toast.error("Máy chủ KMA không hoạt động")
+        case HTTP_SERVICE_UNAVAILABLE: {
+          toast.error("Lỗi máy chủ")
           break
         }
         default:

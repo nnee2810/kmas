@@ -25,9 +25,9 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
 
-  const onSubmit = ({ username, password }: any) => {
+  const onSubmit = ({ studentCode, password }: any) => {
     setLoading(true)
-    login({ username, password }).then((res) => setLoading(false))
+    login({ studentCode, password }).then((res) => setLoading(false))
   }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
 
@@ -42,9 +42,9 @@ export default function LoginForm() {
             <Input
               placeholder="Mã sinh viên"
               focusBorderColor="green.500"
-              isInvalid={!!errors.username}
+              isInvalid={!!errors.studentCode}
               disabled={loading}
-              {...register("username", {
+              {...register("studentCode", {
                 required: {
                   value: true,
                   message: "Chưa nhập mã sinh viên kìa",
@@ -55,7 +55,7 @@ export default function LoginForm() {
             />
           </InputGroup>
           <Text color="red" fontSize={12}>
-            {errors?.username?.message}
+            {errors?.studentCode?.message}
           </Text>
         </Box>
         <Box>
