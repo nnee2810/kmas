@@ -1,30 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import API from "configs/network"
-import { HTTP_OK, HTTP_SERVICE_UNAVAILABLE, HTTP_UNAUTHORIZED, TOKEN } from "defines/common"
-import { LoginProps } from "hooks/useAuth"
-import md5 from "md5"
-import { toast } from "react-toastify"
-import { RootState } from "store"
-
-export const fetchLogin = createAsyncThunk("user/fetchLogin", async (_, { rejectWithValue }) => {
-  try {
-    const res = await API.get("/profile")
-    return res
-  } catch (err) {
-    return rejectWithValue(1)
-  }
-})
-export const postLogin = createAsyncThunk(
-  "user/postLogin",
-  async ({ studentCode, password }: LoginProps, { rejectWithValue }) => {
-    try {
-      const res = await API.post("/login", { studentCode, password: md5(password) })
-      return res
-    } catch (err) {
-      return rejectWithValue(1)
-    }
-  }
-)
+import { createSlice } from "@reduxjs/toolkit"
 
 const userSlice = createSlice({
   name: "user",
@@ -34,73 +8,24 @@ const userSlice = createSlice({
       fullName: "",
       studentCode: "",
     },
+    schedule: [],
   },
   reducers: {
+    setLogin(state, { payload }) {
+      state.loggedIn = true
+      const { profile, schedule } = payload
+      state.profile = profile
+      state.schedule = schedule
+      localStorage.setItem("profile", JSON.stringify(profile))
+      localStorage.setItem("schedule", JSON.stringify(schedule))
+    },
     setLogout(state, { payload }) {
       state.loggedIn = false
-      toast.success("Bye bye 👋")
-      localStorage.removeItem(TOKEN)
-    },
-  },
-  extraReducers: {
-    [postLogin.fulfilled.toString()]: (state, { payload }) => {
-      switch (payload.status) {
-        case HTTP_OK: {
-          const {
-            data: { token, profile },
-          } = payload
-
-          state.loggedIn = true
-          state.profile = profile
-          localStorage.setItem(TOKEN, token)
-          toast.success(`Xin chào ${profile.fullName}`)
-
-          break
-        }
-        case HTTP_UNAUTHORIZED: {
-          toast.error("Tài khoản hoặc mật khẩu không chính xác")
-          break
-        }
-        case HTTP_SERVICE_UNAVAILABLE: {
-          toast.error("Lỗi máy chủ")
-          break
-        }
-        default:
-          break
-      }
-    },
-    [postLogin.rejected.toString()]: (state, { payload }) => {
-      toast.error("Đã có lỗi xảy ra")
-    },
-
-    [fetchLogin.fulfilled.toString()]: (state, { payload }) => {
-      switch (payload.status) {
-        case HTTP_OK: {
-          const {
-            data: { profile, token },
-          } = payload
-
-          state.loggedIn = true
-          state.profile = profile
-          localStorage.setItem(TOKEN, token)
-          toast.success("Welcome back ✨")
-          break
-        }
-        case HTTP_UNAUTHORIZED: {
-          toast.error("Phiên đăng nhập không hợp lệ")
-          localStorage.removeItem(TOKEN)
-          break
-        }
-        default:
-          break
-      }
-    },
-    [fetchLogin.rejected.toString()]: (state, { payload }) => {
-      toast.error("Đã có lỗi xảy ra")
+      localStorage.removeItem("profile")
     },
   },
 })
 
-export const userSelector = (state: RootState) => state.user
-export const { setLogout } = userSlice.actions
+export const userSelector = (state: any) => state.user
+export const { setLogout, setLogin } = userSlice.actions
 export default userSlice.reducer

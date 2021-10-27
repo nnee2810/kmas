@@ -1,43 +1,51 @@
-import LoadingScreen from "components/LoadingScreen"
 import NotFoundScreen from "components/NotFoundScreen"
-import Routes from "components/Routes"
-import { TOKEN } from "defines/common"
 import AppRoute from "defines/IAppRoute"
 import loginRoutes from "features/login/routes"
-import { useAppDispatch } from "hooks/useAppStore"
-import HomeLayout from "layouts/Home"
-import { useEffect, useState } from "react"
+import profileRoutes from "features/profile/routes"
+import scheduleRoutes from "features/schedule/routes"
+import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
+import { useEffect } from "react"
+import { Helmet } from "react-helmet"
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
-import { fetchLogin } from "store/reducers/user"
+import { setLogin, userSelector } from "store/reducers/user"
 
-const routes: AppRoute[] = [
-  {
-    path: "/app",
-    exact: false,
-    component: HomeLayout,
-    requireAuth: true,
-  },
-  ...loginRoutes,
-]
+const routes: AppRoute[] = [...scheduleRoutes, ...profileRoutes, ...loginRoutes]
 
 export default function AppRouter() {
   const dispatch = useAppDispatch()
-  const [loading, setLoading] = useState(true)
+  const { loggedIn } = useAppSelector(userSelector)
 
   useEffect(() => {
-    if (localStorage.getItem(TOKEN)) dispatch(fetchLogin()).then(() => setLoading(false))
-    else setLoading(false)
+    const profile = localStorage.getItem("profile"),
+      schedule = localStorage.getItem("schedule")
+
+    if (profile && schedule) {
+      dispatch(
+        setLogin({
+          profile: JSON.parse(profile),
+          schedule: JSON.parse(schedule),
+        })
+      )
+    }
   }, [dispatch])
 
-  return loading ? (
-    <LoadingScreen />
-  ) : (
+  return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
-          <Redirect to="/app" />
+        <Route exact path="/">
+          <Redirect to="/login" />
         </Route>
-        <Routes routes={routes} />
+        {routes.map((route, idx) => (
+          <Route path={route.path} exact={route.exact} key={"route" + idx}>
+            {route.requireAuth
+              ? !loggedIn && <Redirect to="/login" />
+              : loggedIn && <Redirect to="/schedule" />}
+            {route.name && (
+              <Helmet titleTemplate="KMAS | %s" title={route.name} />
+            )}
+            <route.component />
+          </Route>
+        ))}
         <Route path="*">
           <NotFoundScreen />
         </Route>

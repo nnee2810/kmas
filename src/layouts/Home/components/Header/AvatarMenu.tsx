@@ -13,12 +13,13 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react"
-import useAuth from "hooks/useAuth"
+import { useAppDispatch } from "hooks/useAppStore"
 import React from "react"
 import { Link } from "react-router-dom"
+import { setLogout } from "store/reducers/user"
 
 export default function AvatarMenu() {
-  const { logout } = useAuth()
+  const dispatch = useAppDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
@@ -47,7 +48,11 @@ export default function AvatarMenu() {
           <ModalHeader>Bạn chắc chắn muốn đăng xuất không?</ModalHeader>
           <ModalFooter>
             <Button onClick={onClose}>Không</Button>
-            <Button colorScheme="red" ml={3} onClick={logout}>
+            <Button
+              colorScheme="red"
+              ml={3}
+              onClick={() => dispatch(setLogout({}))}
+            >
               Đăng xuất luôn
             </Button>
           </ModalFooter>

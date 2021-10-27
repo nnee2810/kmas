@@ -9,25 +9,61 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
-import useAuth from "hooks/useAuth"
+import {
+  HTTP_NOT_FOUND,
+  HTTP_SERVICE_UNAVAILABLE,
+  HTTP_UNAUTHORIZED,
+} from "defines/common"
+import { useAppDispatch } from "hooks/useAppStore"
+import usePostLogin from "hooks/usePostLogin"
+import md5 from "md5"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
-import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineUser } from "react-icons/ai"
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUser,
+} from "react-icons/ai"
 import { FiLock } from "react-icons/fi"
+import { toast } from "react-toastify"
+import { setLogin } from "store/reducers/user"
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch()
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm()
   const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
+  const { mutate, isLoading } = usePostLogin()
 
   const onSubmit = ({ studentCode, password }: any) => {
-    setLoading(true)
-    login({ studentCode, password }).then((res) => setLoading(false))
+    if (isLoading) return
+    mutate(
+      { studentCode, password: md5(password) },
+      {
+        onSuccess(data) {
+          toast.success("Đăng nhập thành công")
+          dispatch(setLogin(data))
+        },
+        onError(error: any) {
+          switch (error.response.status) {
+            case HTTP_UNAUTHORIZED: {
+              toast.error("Tài khoản hoặc mật khẩu không chính xác")
+              break
+            }
+            case HTTP_SERVICE_UNAVAILABLE:
+            case HTTP_NOT_FOUND: {
+              toast.error("Lỗi máy chủ")
+              break
+            }
+            default:
+              break
+          }
+        },
+      }
+    )
   }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
 
@@ -43,7 +79,7 @@ export default function LoginForm() {
               placeholder="Mã sinh viên"
               focusBorderColor="green.500"
               isInvalid={!!errors.studentCode}
-              disabled={loading}
+              disabled={isLoading}
               {...register("studentCode", {
                 required: {
                   value: true,
@@ -68,7 +104,7 @@ export default function LoginForm() {
               type={showPassword ? "text" : "password"}
               focusBorderColor="green.500"
               isInvalid={!!errors.password}
-              disabled={loading}
+              disabled={isLoading}
               {...register("password", {
                 required: {
                   value: true,
@@ -77,7 +113,10 @@ export default function LoginForm() {
                 maxLength: { value: 32, message: "Mật khẩu không hợp lệ" },
               })}
             />
-            <InputRightElement cursor="pointer" onClick={handleClickShowPassword}>
+            <InputRightElement
+              cursor="pointer"
+              onClick={handleClickShowPassword}
+            >
               {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
             </InputRightElement>
           </InputGroup>
@@ -85,8 +124,8 @@ export default function LoginForm() {
             {errors?.password?.message}
           </Text>
         </Box>
-        <Button colorScheme="green" type="submit" disabled={loading}>
-          {loading ? <Spinner size="sm" /> : "Đăng nhập"}
+        <Button colorScheme="green" type="submit" isDisabled={isLoading}>
+          {isLoading ? <Spinner size="sm" /> : "Đăng nhập"}
         </Button>
       </Stack>
     </form>

@@ -1,5 +1,5 @@
 import {
-  Flex,
+  HStack,
   IconButton,
   Image,
   Menu,
@@ -25,26 +25,40 @@ export default function SettingMenu() {
   return (
     <Menu closeOnSelect={false}>
       <MenuButton>
-        <IconButton as="div" aria-label="setting" icon={<AiOutlineSetting size="20px" />} />
+        <IconButton
+          as="div"
+          aria-label="setting"
+          icon={<AiOutlineSetting size="20px" />}
+        />
       </MenuButton>
       <MenuList>
-        <MenuOptionGroup title="Giao diện" type="radio" value={theme} onChange={handleChangeTheme}>
+        <MenuOptionGroup
+          title="Giao diện"
+          type="radio"
+          value={theme}
+          onChange={handleChangeTheme}
+        >
           <MenuItemOption value="light">🌞 Sáng</MenuItemOption>
           <MenuItemOption value="dark">🌜 Tối</MenuItemOption>
         </MenuOptionGroup>
         <MenuDivider />
-        <MenuOptionGroup title="Ngôn ngữ" type="radio" value={lang} onChange={handleChangeLang}>
+        <MenuOptionGroup
+          title="Ngôn ngữ"
+          type="radio"
+          value={lang}
+          onChange={handleChangeLang}
+        >
           <MenuItemOption value="vi" alignItems="center">
-            <Flex>
-              <Image src="https://www.countryflags.io/vn/flat/24.png" />
-              <Text ml={1}>Tiếng Việt</Text>
-            </Flex>
+            <HStack>
+              <Image src="https://flagcdn.com/w20/vn.png" />
+              <Text>Tiếng Việt</Text>
+            </HStack>
           </MenuItemOption>
           <MenuItemOption value="en">
-            <Flex>
-              <Image src="https://www.countryflags.io/gb/flat/24.png" />
-              <Text ml={1}>Tiếng Anh</Text>
-            </Flex>
+            <HStack>
+              <Image src="https://flagcdn.com/w20/gb.png" />
+              <Text>Tiếng Anh</Text>
+            </HStack>
           </MenuItemOption>
         </MenuOptionGroup>
       </MenuList>

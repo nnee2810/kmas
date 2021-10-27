@@ -16,13 +16,13 @@ export default function Sidebar() {
   const items: Item[] = useMemo(
     () => [
       {
-        name: "Home",
-        path: "/app",
+        name: "Schedule",
+        path: "/schedule",
         icon: <AiOutlineCalendar size={20} />,
       },
       {
         name: "Parse excel",
-        path: "/app/parse",
+        path: "/parse",
         icon: <SiMicrosoftexcel size={20} />,
       },
     ],
@@ -30,7 +30,12 @@ export default function Sidebar() {
   )
 
   return (
-    <Flex gridArea="sidebar" flexDirection="column" py={4} borderRight="1px solid #f1f1f1">
+    <Flex
+      gridArea="sidebar"
+      flexDirection="column"
+      py={4}
+      borderRight="1px solid #f1f1f1"
+    >
       <VStack spacing="16px">
         {items.map((item, idx) => (
           <Link to={item.path} key={"sidebar" + idx}>
@@ -38,7 +43,9 @@ export default function Sidebar() {
               <IconButton
                 aria-label={item.name}
                 icon={item.icon}
-                colorScheme={history.location.pathname === item.path ? "green" : undefined}
+                colorScheme={
+                  history.location.pathname === item.path ? "green" : undefined
+                }
               />
             </Tooltip>
           </Link>
