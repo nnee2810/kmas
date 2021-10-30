@@ -1,4 +1,10 @@
-import { Flex, IconButton, Tooltip, VStack } from "@chakra-ui/react"
+import {
+  IconButton,
+  Stack,
+  StackDirection,
+  Tooltip,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 import React, { ReactElement, useMemo } from "react"
 import { AiOutlineCalendar } from "react-icons/ai"
 import { SiMicrosoftexcel } from "react-icons/si"
@@ -12,6 +18,11 @@ interface Item {
 
 export default function Sidebar() {
   const history = useHistory()
+  const direction = useBreakpointValue({ base: "row", lg: "column" })
+  const justifyContent = useBreakpointValue({
+    base: "center",
+    lg: "flex-start",
+  })
 
   const items: Item[] = useMemo(
     () => [
@@ -30,27 +41,29 @@ export default function Sidebar() {
   )
 
   return (
-    <Flex
+    <Stack
       gridArea="sidebar"
-      flexDirection="column"
-      py={4}
+      borderTop="1px solid #f1f1f1"
       borderRight="1px solid #f1f1f1"
+      direction={direction as StackDirection}
+      spacing="16px"
+      alignItems="center"
+      justifyContent={justifyContent}
+      py={2}
     >
-      <VStack spacing="16px">
-        {items.map((item, idx) => (
-          <Link to={item.path} key={"sidebar" + idx}>
-            <Tooltip label={item.name} placement="right">
-              <IconButton
-                aria-label={item.name}
-                icon={item.icon}
-                colorScheme={
-                  history.location.pathname === item.path ? "green" : undefined
-                }
-              />
-            </Tooltip>
-          </Link>
-        ))}
-      </VStack>
-    </Flex>
+      {items.map((item, idx) => (
+        <Link to={item.path} key={"sidebar" + idx}>
+          <Tooltip label={item.name} placement="right">
+            <IconButton
+              aria-label={item.name}
+              icon={item.icon}
+              colorScheme={
+                history.location.pathname === item.path ? "green" : undefined
+              }
+            />
+          </Tooltip>
+        </Link>
+      ))}
+    </Stack>
   )
 }

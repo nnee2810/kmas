@@ -13,14 +13,18 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react"
-import { useAppDispatch } from "hooks/useAppStore"
+import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
 import React from "react"
 import { Link } from "react-router-dom"
-import { setLogout } from "store/reducers/user"
+import { setLogout, userSelector } from "store/reducers/user"
 
 export default function AvatarMenu() {
   const dispatch = useAppDispatch()
+  const {
+    profile: { fullName },
+  } = useAppSelector(userSelector)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log(fullName)
 
   return (
     <>
@@ -30,7 +34,11 @@ export default function AvatarMenu() {
             as="div"
             aria-label="avatar"
             overflow="hidden"
-            icon={<Image src="https://via.placeholder.com/40/40" />}
+            icon={
+              <Image
+                src={`https://ui-avatars.com/api/?size=40&name=${fullName}`}
+              />
+            }
           />
         </MenuButton>
         <MenuList>

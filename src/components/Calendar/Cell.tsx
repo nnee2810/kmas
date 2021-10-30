@@ -1,3 +1,4 @@
+import IDate from "defines/IDate"
 import { ReactElement } from "react"
 
 const getDaysInMonth = ({ month, year }: { month: number; year: number }) =>
@@ -12,16 +13,6 @@ const getFirstDayInMonth = ({
   const date = new Date(year, month, 1)
   return date.getDay()
 }
-const getLastDayInMonth = ({
-  month,
-  year,
-}: {
-  month: number
-  year: number
-}) => {
-  const date = new Date(year, month, 0)
-  return date.getDay()
-}
 const getCellValue = ({
   month,
   year,
@@ -31,45 +22,43 @@ const getCellValue = ({
   year: number
   cellIdx: number
 }) => {
-  const current = new Date()
-  const days = getDaysInMonth({ month, year }),
-    fisrtDay = getFirstDayInMonth({ month, year }),
-    lastDay = getLastDayInMonth({ month, year })
-  let cell
-  if (cellIdx <= fisrtDay) {
-    const daysInPrevMonth = getDaysInMonth({ month: month - 1, year })
-    console.log(daysInPrevMonth)
+  const now = new Date()
+  const days = getDaysInMonth({ month: month + 1, year }),
+    firstDay = getFirstDayInMonth({ month, year })
 
+  let cell
+  if (cellIdx < firstDay) {
+    const daysInPrevMonth = getDaysInMonth({ month, year })
     cell = {
       value: {
-        day: daysInPrevMonth - fisrtDay + cellIdx,
+        date: daysInPrevMonth - firstDay + cellIdx + 1,
         month: month - 1 < 0 ? 11 : month - 1,
         year: month - 1 < 0 ? year - 1 : year,
       },
       isToday: false,
       isDiffMonth: true,
     }
-  } else if (cellIdx - fisrtDay - days > 0)
+  } else if (cellIdx - firstDay >= days) {
     cell = {
       value: {
-        day: cellIdx - fisrtDay - days,
+        date: cellIdx - firstDay - days + 1,
         month: month + 1 > 11 ? 0 : month + 1,
         year: month + 1 > 11 ? year + 1 : year,
       },
       isToday: false,
       isDiffMonth: true,
     }
-  else
+  } else
     cell = {
       value: {
-        day: cellIdx - fisrtDay,
+        date: cellIdx - firstDay + 1,
         month,
         year,
       },
       isToday:
-        cellIdx - fisrtDay === current.getDate() &&
-        month === current.getMonth() &&
-        year === current.getFullYear(),
+        cellIdx - firstDay + 1 === now.getDate() &&
+        month === now.getMonth() &&
+        year === now.getFullYear(),
       isDiffMonth: false,
     }
   return cell
@@ -86,11 +75,7 @@ interface CellProps {
     isToday,
     isDiffMonth,
   }: {
-    value: {
-      day: number
-      month: number
-      year: number
-    }
+    value: IDate
     isToday: boolean
     isDiffMonth: boolean
   }) => ReactElement
