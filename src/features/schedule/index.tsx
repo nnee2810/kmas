@@ -1,5 +1,4 @@
 import { Box, Grid } from "@chakra-ui/layout"
-import { useBreakpointValue } from "@chakra-ui/media-query"
 import BlinkDot from "components/BlinkDot"
 import Calendar from "components/Calendar"
 import IDate from "defines/IDate"
@@ -11,7 +10,6 @@ import { userSelector } from "store/reducers/user"
 import ScheduleToday from "./components/ScheduleToday"
 
 export default function Schedule() {
-  const templateColumns = useBreakpointValue({ lg: "1fr 350px", base: "auto" })
   const { schedule } = useAppSelector(userSelector)
   const [current, setCurrent] = useState(
     (() => {
@@ -48,7 +46,7 @@ export default function Schedule() {
 
   return (
     <HomeLayout>
-      <Grid templateColumns={templateColumns} h="100%">
+      <Grid templateColumns={{ base: "auto", lg: "1fr 350px" }} h="100%">
         <Calendar renderCell={renderCell} onChange={onChange} />
         <ScheduleToday
           current={current}

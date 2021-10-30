@@ -7,7 +7,6 @@ import {
 } from "@chakra-ui/react"
 import React, { ReactElement, useMemo } from "react"
 import { AiOutlineCalendar } from "react-icons/ai"
-import { SiMicrosoftexcel } from "react-icons/si"
 import { Link, useHistory } from "react-router-dom"
 
 interface Item {
@@ -30,11 +29,6 @@ export default function Sidebar() {
         name: "Schedule",
         path: "/schedule",
         icon: <AiOutlineCalendar size={20} />,
-      },
-      {
-        name: "Parse excel",
-        path: "/parse",
-        icon: <SiMicrosoftexcel size={20} />,
       },
     ],
     []

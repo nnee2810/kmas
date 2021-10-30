@@ -20,6 +20,7 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
       }
     })()
   )
+
   const handleClickToday = () => {
     const now = new Date()
     setCurrent({ month: now.getMonth(), year: now.getFullYear() })
@@ -72,8 +73,9 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
             borderColor="gray.200"
             borderStyle="solid"
             key={"header" + idx}
+            fontSize={14}
           >
-            {idx === 0 ? "Chủ nhật" : `Thứ ${idx + 1}`}
+            {idx === 0 ? "CN" : `T${idx + 1}`}
           </Center>
         ))}
         {Array.from({ length: 42 }).map((item, idx) => (
@@ -86,7 +88,8 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
             }}
             render={({ value, isToday, isDiffMonth }) => (
               <Box
-                h="120px"
+                h={{ base: "calc(100vw / 7)", md: "110px" }}
+                minH="60px"
                 borderWidth={(idx + 1) % 7 ? "0 1px 1px 0" : "0 0 1px 0"}
                 borderColor="gray.200"
                 borderStyle="solid"

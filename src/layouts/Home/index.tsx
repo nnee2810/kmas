@@ -1,4 +1,4 @@
-import { Grid, GridItem, useBreakpointValue } from "@chakra-ui/react"
+import { Grid, GridItem } from "@chakra-ui/react"
 import React, { ReactNode } from "react"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
@@ -8,21 +8,17 @@ interface HomeLayoutProps {
 }
 
 export default function HomeLayout({ children }: HomeLayoutProps) {
-  const templateRows = useBreakpointValue({
-    lg: "60px calc(100vh - 60px)",
-    base: "60px calc(100vh - 120px) 60px",
-  })
-  const templateColumns = useBreakpointValue({ lg: "60px 1fr", base: "1fr" })
-  const templateAreas = useBreakpointValue({
-    lg: "'header header' 'sidebar main'",
-    base: "'header' 'main' 'sidebar'",
-  })
-
   return (
     <Grid
-      templateRows={templateRows}
-      templateColumns={templateColumns}
-      templateAreas={templateAreas}
+      templateRows={{
+        base: "60px calc(100vh - 120px) 60px",
+        lg: "60px calc(100vh - 60px)",
+      }}
+      templateColumns={{ base: "1fr", lg: "60px 1fr" }}
+      templateAreas={{
+        base: "'header' 'main' 'sidebar'",
+        lg: "'header header' 'sidebar main'",
+      }}
     >
       <Header />
       <Sidebar />
