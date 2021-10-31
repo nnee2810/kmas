@@ -15,7 +15,6 @@ import {
 } from "@chakra-ui/react"
 import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
 import React from "react"
-import { Link } from "react-router-dom"
 import { setLogout, userSelector } from "store/reducers/user"
 
 export default function AvatarMenu() {
@@ -24,7 +23,6 @@ export default function AvatarMenu() {
     profile: { fullName },
   } = useAppSelector(userSelector)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  console.log(fullName)
 
   return (
     <>
@@ -42,9 +40,6 @@ export default function AvatarMenu() {
           />
         </MenuButton>
         <MenuList>
-          <Link to="/app/profile">
-            <MenuItem>Thông tin sinh viên</MenuItem>
-          </Link>
           <MenuItem _hover={{ bg: "red", color: "white" }} onClick={onOpen}>
             Đăng xuất
           </MenuItem>

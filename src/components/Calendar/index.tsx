@@ -1,4 +1,5 @@
 import { Button } from "@chakra-ui/button"
+import { useColorModeValue } from "@chakra-ui/color-mode"
 import { Box, Center, Grid, HStack, Text } from "@chakra-ui/layout"
 import IDate from "defines/IDate"
 import React, { ReactNode, useState } from "react"
@@ -20,6 +21,9 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
       }
     })()
   )
+  const textColor = useColorModeValue("black", "white")
+  const bgDiffMonth = useColorModeValue("gray.100", "gray.600")
+  const borderColor = useColorModeValue("gray.100", "gray.700")
 
   const handleClickToday = () => {
     const now = new Date()
@@ -70,7 +74,7 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
           <Center
             h="48px"
             borderWidth="1px 0"
-            borderColor="gray.200"
+            borderColor={borderColor}
             borderStyle="solid"
             key={"header" + idx}
             fontSize={14}
@@ -91,23 +95,23 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
                 h={{ base: "calc(100vw / 7)", md: "110px" }}
                 minH="60px"
                 borderWidth={(idx + 1) % 7 ? "0 1px 1px 0" : "0 0 1px 0"}
-                borderColor="gray.200"
+                borderColor={borderColor}
                 borderStyle="solid"
-                bg={isDiffMonth ? "gray.100" : ""}
+                bg={isDiffMonth ? bgDiffMonth : ""}
                 p={2}
                 cursor="pointer"
                 onClick={() => handleClickCell(value)}
               >
                 <Center
                   fontWeight="500"
-                  color={isDiffMonth ? "gray" : isToday ? "white" : "black"}
+                  color={isDiffMonth ? "gray" : isToday ? "white" : textColor}
                   bg={isToday ? "green" : ""}
                   borderRadius={isToday ? "50%" : ""}
                   width="28px"
                   height="28px"
                   fontSize={14}
                 >
-                  {value.date}
+                  <Text>{value.date}</Text>
                 </Center>
                 {renderCell && renderCell(value)}
               </Box>

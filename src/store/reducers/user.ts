@@ -22,6 +22,7 @@ const userSlice = createSlice({
     setLogout(state, { payload }) {
       state.loggedIn = false
       localStorage.removeItem("profile")
+      localStorage.removeItem("schedule")
     },
   },
 })

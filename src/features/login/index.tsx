@@ -18,6 +18,7 @@ export default function Login() {
       rgba(29, 229, 226, 1) 0%,
       rgba(180, 136, 247, 1) 88%
     )"
+      color="black"
     >
       <Box bg="white" px={8} py={12} borderRadius={4} boxShadow={boxShadow}>
         <LogoText />
@@ -36,7 +37,11 @@ export default function Login() {
 
       <Text position="absolute" bottom={1} color="white">
         Góp ý, báo lỗi
-        <Link textDecoration="underline" href="mailto:dvn281002@gmail.com" mx={1}>
+        <Link
+          textDecoration="underline"
+          href="mailto:dvn281002@gmail.com"
+          mx={1}
+        >
           tại đây
         </Link>
         nha 💖

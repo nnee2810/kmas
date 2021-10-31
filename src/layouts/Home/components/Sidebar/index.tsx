@@ -1,10 +1,4 @@
-import {
-  IconButton,
-  Stack,
-  StackDirection,
-  Tooltip,
-  useBreakpointValue,
-} from "@chakra-ui/react"
+import { IconButton, Stack, Tooltip, useColorModeValue } from "@chakra-ui/react"
 import React, { ReactElement, useMemo } from "react"
 import { AiOutlineCalendar } from "react-icons/ai"
 import { Link, useHistory } from "react-router-dom"
@@ -17,11 +11,7 @@ interface Item {
 
 export default function Sidebar() {
   const history = useHistory()
-  const direction = useBreakpointValue({ base: "row", lg: "column" })
-  const justifyContent = useBreakpointValue({
-    base: "center",
-    lg: "flex-start",
-  })
+  const borderColor = useColorModeValue("#EDF2F7", "#2D3748")
 
   const items: Item[] = useMemo(
     () => [
@@ -37,12 +27,15 @@ export default function Sidebar() {
   return (
     <Stack
       gridArea="sidebar"
-      borderTop="1px solid #f1f1f1"
-      borderRight="1px solid #f1f1f1"
-      direction={direction as StackDirection}
+      borderTop={{ base: `1px solid ${borderColor}`, lg: "0" }}
+      borderRight={{ base: "0", lg: `1px solid ${borderColor}` }}
+      direction={{ base: "row", lg: "column" }}
       spacing="16px"
       alignItems="center"
-      justifyContent={justifyContent}
+      justifyContent={{
+        base: "center",
+        lg: "flex-start",
+      }}
       py={2}
     >
       {items.map((item, idx) => (
@@ -51,8 +44,11 @@ export default function Sidebar() {
             <IconButton
               aria-label={item.name}
               icon={item.icon}
-              colorScheme={
-                history.location.pathname === item.path ? "green" : undefined
+              bg={
+                history.location.pathname === item.path ? "#38a169" : undefined
+              }
+              color={
+                history.location.pathname === item.path ? "white" : "black"
               }
             />
           </Tooltip>

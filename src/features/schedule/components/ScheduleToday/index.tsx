@@ -1,3 +1,4 @@
+import { useColorModeValue } from "@chakra-ui/color-mode"
 import { Box, Center, Flex } from "@chakra-ui/layout"
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table"
 import IDate from "defines/IDate"
@@ -14,8 +15,9 @@ export default function ScheduleToday({
   current: { date, month, year },
   schedule,
 }: ScheduleTodayProps) {
+  const borderColor = useColorModeValue("#EDF2F7", "#2D3748")
   return (
-    <Box borderLeft="1px" borderColor="gray.100" borderStyle="solid">
+    <Box borderLeft={{ base: "0", lg: `1px solid ${borderColor}` }}>
       <Center fontWeight="500" fontSize={16} h={14}>
         {date}/{month + 1}/{year}
       </Center>
