@@ -14,15 +14,23 @@ export default function Login() {
   return (
     <Center
       bg="linear-gradient(
-      45deg,
-      rgba(29, 229, 226, 1) 0%,
-      rgba(180, 136, 247, 1) 88%
-    )"
+        45deg,
+        rgba(29, 229, 226, 1) 0%,
+        rgb(53 231 165) 88%
+        )"
       color="black"
+      px={4}
     >
-      <Box bg="white" px={8} py={12} borderRadius={4} boxShadow={boxShadow}>
+      <Box
+        bg="white"
+        px={6}
+        py={12}
+        borderRadius={4}
+        boxShadow={boxShadow}
+        width={{ base: "100%", sm: "400px" }}
+      >
         <LogoText />
-        <Box mt={5} width="350px">
+        <Box mt={5}>
           <LoginForm />
         </Box>
         <Text mt={3} align="right">
