@@ -1,5 +1,7 @@
 import AppRoute from "defines/IAppRoute"
-import Login from "."
+import { lazy } from "react"
+
+const Login = lazy(() => import("."))
 
 const loginRoutes: AppRoute[] = [
   {

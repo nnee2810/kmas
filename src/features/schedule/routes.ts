@@ -1,5 +1,7 @@
 import AppRoute from "defines/IAppRoute"
-import Schedule from "."
+import { lazy } from "react"
+
+const Schedule = lazy(() => import("."))
 
 const scheduleRoutes: AppRoute[] = [
   {

@@ -1,7 +1,6 @@
 import NotFoundScreen from "components/NotFoundScreen"
 import AppRoute from "defines/IAppRoute"
 import loginRoutes from "features/login/routes"
-import profileRoutes from "features/profile/routes"
 import scheduleRoutes from "features/schedule/routes"
 import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
 import { useEffect } from "react"
@@ -9,7 +8,7 @@ import { Helmet } from "react-helmet"
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import { setLogin, userSelector } from "store/reducers/user"
 
-const routes: AppRoute[] = [...scheduleRoutes, ...profileRoutes, ...loginRoutes]
+const routes: AppRoute[] = [...scheduleRoutes, ...loginRoutes]
 
 export default function AppRouter() {
   const dispatch = useAppDispatch()
