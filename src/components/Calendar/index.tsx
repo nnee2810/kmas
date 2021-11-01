@@ -105,7 +105,7 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
                 <Center
                   fontWeight="500"
                   color={isDiffMonth ? "gray" : isToday ? "white" : textColor}
-                  bg={isToday ? "green" : ""}
+                  bg={isToday ? "green.500" : ""}
                   borderRadius={isToday ? "50%" : ""}
                   width="28px"
                   height="28px"
