@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
           <Suspense fallback={<LoadingScreen />}>
