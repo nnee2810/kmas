@@ -31,7 +31,7 @@ export default function ScheduleToday({
               color="white"
               px={3}
             >
-              {moment(item.startAt).format("HH:mm")} 🠒{" "}
+              {moment(item.startAt).format("HH:mm")} -{" "}
               {moment(item.endAt).format("HH:mm")}
             </Flex>
             <Table>

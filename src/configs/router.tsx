@@ -39,9 +39,7 @@ export default function AppRouter() {
             {route.requireAuth
               ? !loggedIn && <Redirect to="/login" />
               : loggedIn && <Redirect to="/schedule" />}
-            {route.name && (
-              <Helmet titleTemplate="KMAS | %s" title={route.name} />
-            )}
+            {route.name && <Helmet title={`KMAS | ${route.name}`} />}
             <route.component />
           </Route>
         ))}
