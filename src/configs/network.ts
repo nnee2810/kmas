@@ -1,12 +1,8 @@
 import axios from "axios"
 import { TOKEN } from "defines/common"
 
-let baseURL = "https://kmas-api.herokuapp.com/"
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development")
-  baseURL = "http://localhost:5000"
-
 const API = axios.create({
-  baseURL,
+  baseURL: process.env.REACT_APP_API,
 })
 
 API.interceptors.response.use((res) => {

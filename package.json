@@ -36,13 +36,16 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",
-    "@types/styled-components": "^5.1.12"
+    "@types/styled-components": "^5.1.12",
+    "env-cmd": "^10.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:dev": "env-cmd -f ./.dev.env yarn start",
+    "start:prod": "env-cmd -f ./.prod.env yarn start"
   },
   "eslintConfig": {
     "extends": [
