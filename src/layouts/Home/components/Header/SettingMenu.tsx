@@ -1,15 +1,19 @@
-import { Box, IconButton, useColorMode } from "@chakra-ui/react"
+import { Box, IconButton } from "@chakra-ui/react"
+import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
 import React from "react"
+import { settingsSelector, toggleTheme } from "store/reducers/settings"
 
 export default function SettingMenu() {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const dispatch = useAppDispatch()
+  const { theme } = useAppSelector(settingsSelector)
+
+  const handleToggleTheme = () => dispatch(toggleTheme(theme))
 
   return (
     <IconButton
-      as="div"
       aria-label="setting"
-      icon={colorMode === "light" ? <Box>🌞</Box> : <Box>🌜</Box>}
-      onClick={toggleColorMode}
+      icon={theme === "light" ? <Box>🌞</Box> : <Box>🌜</Box>}
+      onClick={handleToggleTheme}
     />
   )
 }

@@ -5,14 +5,12 @@ import React, { Suspense } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { GlobalStyle } from "styles"
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
     <>
-      <GlobalStyle />
       <ToastContainer autoClose={2000} />
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>

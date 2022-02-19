@@ -29,7 +29,6 @@ export default function AvatarMenu() {
       <Menu>
         <MenuButton>
           <IconButton
-            as="div"
             aria-label="avatar"
             overflow="hidden"
             icon={
