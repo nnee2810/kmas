@@ -8,16 +8,16 @@ const userSlice = createSlice({
       fullName: "",
       studentCode: "",
     },
-    schedule: [],
+    lessons: [],
   },
   reducers: {
     setLogin(state, { payload }) {
       state.loggedIn = true
-      const { profile, schedule } = payload
+      const { profile, lessons } = payload
       state.profile = profile
-      state.schedule = schedule
+      state.lessons = lessons
       localStorage.setItem("profile", JSON.stringify(profile))
-      localStorage.setItem("schedule", JSON.stringify(schedule))
+      localStorage.setItem("lessons", JSON.stringify(lessons))
     },
     setLogout(state, { payload }) {
       state.loggedIn = false

@@ -16,13 +16,13 @@ export default function AppRouter() {
 
   useEffect(() => {
     const profile = localStorage.getItem("profile"),
-      schedule = localStorage.getItem("schedule")
+      lessons = localStorage.getItem("lessons")
 
-    if (profile && schedule) {
+    if (profile && lessons) {
       dispatch(
         setLogin({
           profile: JSON.parse(profile),
-          schedule: JSON.parse(schedule),
+          lessons: JSON.parse(lessons),
         })
       )
     }
