@@ -1,4 +1,3 @@
-import { useColorModeValue } from "@chakra-ui/color-mode"
 import { Box, Center, Flex } from "@chakra-ui/layout"
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table"
 import IDate from "defines/IDate"
@@ -6,23 +5,22 @@ import ILesson from "defines/ILesson"
 import moment from "moment"
 import React from "react"
 
-interface ScheduleTodayProps {
+interface LessonsTodayProps {
   current: IDate
-  schedule: [ILesson]
+  lessons: [ILesson]
 }
 
-export default function ScheduleToday({
+export default function LessonsToday({
   current: { date, month, year },
-  schedule,
-}: ScheduleTodayProps) {
-  const borderColor = useColorModeValue("#EDF2F7", "#2D3748")
+  lessons,
+}: LessonsTodayProps) {
   return (
-    <Box borderLeft={{ base: "0", lg: `1px solid ${borderColor}` }}>
+    <Box borderLeft={{ base: "0", lg: "1px solid #EDF2F7" }}>
       <Center fontWeight="500" fontSize={16} h={14}>
         {date}/{month + 1}/{year}
       </Center>
-      {schedule.length ? (
-        schedule.map((item: ILesson, idx: number) => (
+      {lessons.length ? (
+        lessons.map((item: ILesson, idx: number) => (
           <Box key={idx}>
             <Flex
               alignItems="center"

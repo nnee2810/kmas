@@ -1,16 +1,16 @@
 import { Box, Grid } from "@chakra-ui/layout"
-import BlinkDot from "components/BlinkDot"
-import Calendar from "components/Calendar"
 import IDate from "defines/IDate"
 import ILesson from "defines/ILesson"
+import BlinkDot from "features/lessons/components/BlinkDot"
+import Calendar from "features/lessons/components/Calendar"
 import { useAppSelector } from "hooks/useAppStore"
 import HomeLayout from "layouts/Home"
 import React, { useState } from "react"
 import { userSelector } from "store/reducers/user"
-import ScheduleToday from "./components/ScheduleToday"
+import LessonsToday from "./components/LessonsToday"
 
 export default function Schedule() {
-  const { schedule } = useAppSelector(userSelector)
+  const { lessons } = useAppSelector(userSelector)
   const [current, setCurrent] = useState(
     (() => {
       const now = new Date()
@@ -22,8 +22,8 @@ export default function Schedule() {
     })()
   )
 
-  const getScheduleInDate = ({ date, month, year }: IDate) =>
-    schedule.filter((item: ILesson) => {
+  const getLessonsInDate = ({ date, month, year }: IDate) =>
+    lessons.filter((item: ILesson) => {
       const current = new Date(item.startAt)
       return (
         date === current.getDate() &&
@@ -32,7 +32,7 @@ export default function Schedule() {
       )
     })
   const renderCell = (value: IDate) => {
-    const scheduleInDate = getScheduleInDate(value)
+    const scheduleInDate = getLessonsInDate(value)
     if (scheduleInDate.length > 0)
       return (
         <Box ml="11px">
@@ -48,10 +48,7 @@ export default function Schedule() {
     <HomeLayout>
       <Grid templateColumns={{ base: "auto", lg: "1fr 350px" }} h="100%">
         <Calendar renderCell={renderCell} onChange={onChange} />
-        <ScheduleToday
-          current={current}
-          schedule={getScheduleInDate(current)}
-        />
+        <LessonsToday current={current} lessons={getLessonsInDate(current)} />
       </Grid>
     </HomeLayout>
   )

@@ -16,8 +16,8 @@ export default function Sidebar() {
   const items: Item[] = useMemo(
     () => [
       {
-        name: "Schedule",
-        path: "/schedule",
+        name: "Lessons",
+        path: "/lessons",
         icon: <AiOutlineCalendar size={20} />,
       },
     ],

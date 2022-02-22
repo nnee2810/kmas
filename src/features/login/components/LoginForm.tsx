@@ -41,8 +41,9 @@ export default function LoginForm() {
           dispatch(setLogin(data))
         },
         onError(error: any) {
-          toast.error("Có lỗi xảy ra")
-          console.log(error)
+          if (error?.response?.status === 401)
+            toast.error("Tài khoản hoặc mật khẩu không chính xác")
+          else toast.error("Có lỗi xảy ra")
         },
       }
     )
