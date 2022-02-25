@@ -8,7 +8,7 @@ const lessonsRoutes: AppRoute[] = [
     name: "Home",
     component: Lessons,
     exact: true,
-    path: "/lessons",
+    path: "/schedule",
     requireAuth: true,
   },
 ]

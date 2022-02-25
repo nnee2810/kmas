@@ -17,7 +17,7 @@ export default function Sidebar() {
     () => [
       {
         name: "Lessons",
-        path: "/lessons",
+        path: "/schedule",
         icon: <AiOutlineCalendar size={20} />,
       },
     ],

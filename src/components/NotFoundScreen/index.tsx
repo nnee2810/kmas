@@ -13,7 +13,7 @@ export default function NotFoundScreen() {
         alt=""
         width="600px"
       />
-      <Link to="/lessons">
+      <Link to="/schedule">
         <Button colorScheme="red">Back home</Button>
       </Link>
     </Center>

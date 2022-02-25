@@ -11,6 +11,7 @@ export default function SettingMenu() {
 
   return (
     <IconButton
+      as="div"
       aria-label="setting"
       icon={theme === "light" ? <Box>🌞</Box> : <Box>🌜</Box>}
       onClick={handleToggleTheme}
