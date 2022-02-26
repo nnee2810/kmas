@@ -11,6 +11,7 @@ import IDate from "defines/IDate"
 import ILesson from "defines/ILesson"
 import React from "react"
 import LessonsTab from "./LessonsTab"
+import TodoTab from "./TodoTab"
 
 interface ScheduleTodayProps {
   current: IDate
@@ -39,7 +40,7 @@ export default function ScheduleToday({
             <LessonsTab lessons={lessons} />
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <TodoTab />
           </TabPanel>
         </TabPanels>
       </Tabs>

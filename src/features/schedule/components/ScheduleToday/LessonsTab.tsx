@@ -40,6 +40,6 @@ export default function LessonsTab({ lessons }: LessonsTabProps) {
       ))}
     </Box>
   ) : (
-    <Center h={12}>Không có tiết học nào</Center>
+    <Center>Không có tiết học nào</Center>
   )
 }
