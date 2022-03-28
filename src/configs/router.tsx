@@ -1,12 +1,13 @@
 import NotFoundScreen from "components/NotFoundScreen"
-import AppRoute from "defines/IAppRoute"
-import loginRoutes from "features/login/routes"
-import scheduleRoutes from "features/schedule/routes"
 import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
+import loginRoutes from "modules/login/routes"
+import scheduleRoutes from "modules/schedule/routes"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import { setLogin, userSelector } from "store/reducers/user"
+import { AppRoute } from "types/AppRoute"
+import { STORAGE_KEY } from "./constants"
 
 const routes: AppRoute[] = [...scheduleRoutes, ...loginRoutes]
 
@@ -15,8 +16,8 @@ export default function AppRouter() {
   const { loggedIn } = useAppSelector(userSelector)
 
   useEffect(() => {
-    const profile = localStorage.getItem("profile"),
-      lessons = localStorage.getItem("lessons")
+    const profile = localStorage.getItem(STORAGE_KEY.PROFILE),
+      lessons = localStorage.getItem(STORAGE_KEY.LESSONS)
 
     if (profile && lessons) {
       dispatch(

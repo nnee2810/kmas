@@ -1,10 +1,10 @@
 import { Grid, GridItem } from "@chakra-ui/react"
-import React, { ReactNode } from "react"
+import React, { ReactElement } from "react"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 
 interface HomeLayoutProps {
-  children?: ReactNode
+  children?: ReactElement
 }
 
 export default function HomeLayout({ children }: HomeLayoutProps) {

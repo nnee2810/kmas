@@ -54,7 +54,7 @@ export default function AvatarMenu() {
             <Button
               colorScheme="red"
               ml={3}
-              onClick={() => dispatch(setLogout({}))}
+              onClick={() => dispatch(setLogout())}
             >
               Đăng xuất luôn
             </Button>

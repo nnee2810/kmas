@@ -1,25 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { STORAGE_KEY } from "configs/constants"
+import { Student } from "types/Student"
 
+interface SliceState extends Student {
+  loggedIn: boolean
+}
+
+const initialState: SliceState = {
+  loggedIn: false,
+  profile: {
+    fullName: "",
+    studentCode: "",
+  },
+  lessons: [],
+}
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    loggedIn: false,
-    profile: {
-      fullName: "",
-      studentCode: "",
-    },
-    lessons: [],
-  },
+  initialState,
   reducers: {
-    setLogin(state, { payload }) {
+    setLogin(state, { payload: { lessons, profile } }: PayloadAction<Student>) {
       state.loggedIn = true
-      const { profile, lessons } = payload
       state.profile = profile
       state.lessons = lessons
-      localStorage.setItem("profile", JSON.stringify(profile))
-      localStorage.setItem("lessons", JSON.stringify(lessons))
+      localStorage.setItem(STORAGE_KEY.PROFILE, JSON.stringify(profile))
+      localStorage.setItem(STORAGE_KEY.LESSONS, JSON.stringify(lessons))
     },
-    setLogout(state, { payload }) {
+    setLogout(state) {
       state.loggedIn = false
       localStorage.clear()
     },
