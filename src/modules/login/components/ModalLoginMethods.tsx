@@ -1,5 +1,6 @@
 import {
   Button,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -7,16 +8,18 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  Text,
 } from "@chakra-ui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Field from "components/Field"
-import { loginMethods } from "configs/constants"
 import { useAppDispatch } from "hooks/useAppStore"
 import React from "react"
 import { FormProvider, useForm } from "react-hook-form"
+import { RiShareBoxLine } from "react-icons/ri"
 import { toast } from "react-toastify"
 import { setLogin } from "store/reducers/user"
 import { ModalProps } from "types/ModalProps"
+import { SelectOption } from "types/SelectOption"
 import * as yup from "yup"
 import { useGetLessons } from "../hooks/useGetLessons"
 
@@ -42,6 +45,17 @@ const defaultValues: FormValues = {
   excel: undefined,
   source: "",
 }
+const loginMethods: SelectOption[] = [
+  {
+    label: "File excel",
+    value: "excel",
+  },
+  {
+    label: "Nguồn trang",
+    value: "source",
+  },
+]
+
 export default function ModalLoginMethods({ isOpen, onClose }: ModalProps) {
   const dispatch = useAppDispatch()
   const methods = useForm<FormValues>({
@@ -100,6 +114,7 @@ export default function ModalLoginMethods({ isOpen, onClose }: ModalProps) {
                 {methods.watch("method") === "source" && (
                   <Field variant="LONGTEXT" name="source" />
                 )}
+                {renderHelper(methods.watch("method"))}
               </Stack>
             </ModalBody>
             <ModalFooter>
@@ -120,4 +135,27 @@ export default function ModalLoginMethods({ isOpen, onClose }: ModalProps) {
       </ModalContent>
     </Modal>
   )
+}
+function renderHelper(method: "excel" | "source") {
+  if (method === "excel")
+    return (
+      <Text>
+        Tải file excel kiểu thời khóa biểu là <b>Hiển thị theo ngày học</b> tại{" "}
+        <Link
+          href="http://qldt.actvn.edu.vn/CMCSoft.IU.Web.Info/Reports/Form/StudentTimeTable.aspx"
+          target="_blank"
+        >
+          trang xem kết quả ĐKH <RiShareBoxLine style={{ display: "inline" }} />
+        </Link>{" "}
+        (đăng nhập tại{" "}
+        <Link
+          href="http://qldt.actvn.edu.vn/CMCSoft.IU.Web.Info/Login.aspx"
+          target="_blank"
+        >
+          trang quản lí sinh viên{" "}
+          <RiShareBoxLine style={{ display: "inline" }} />
+        </Link>
+        )
+      </Text>
+    )
 }
