@@ -1,8 +1,8 @@
 version: "3.8"
 services:
-  kmas-web:
+  kmas-app:
     build: .
-    container_name: kmas-web
-    image: kmas-web:1.0
+    container_name: kmas-app
+    image: kmas-app:1.0
     ports:
       - 80:80
