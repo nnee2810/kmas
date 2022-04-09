@@ -1,6 +1,7 @@
 import { Textarea } from "@chakra-ui/react"
 import React from "react"
 import { ControllerRenderProps } from "react-hook-form"
+import { colors } from "styles/colors"
 import { BaseFieldProps } from "."
 
 interface LongTextFieldProps extends BaseFieldProps {
@@ -18,7 +19,7 @@ export default function LongTextField({
       placeholder={placeholder}
       isDisabled={isDisabled}
       isInvalid={isInvalid}
-      focusBorderColor="green.500"
+      focusBorderColor={colors.green}
       {...field}
     />
   )

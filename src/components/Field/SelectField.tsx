@@ -1,6 +1,7 @@
 import { Select } from "@chakra-ui/react"
 import React from "react"
 import { ControllerRenderProps } from "react-hook-form"
+import { colors } from "styles/colors"
 import { SelectOption } from "types/SelectOption"
 import { BaseFieldProps } from "."
 
@@ -21,7 +22,7 @@ export default function SelectField({
       placeholder={placeholder}
       isDisabled={isDisabled}
       isInvalid={isInvalid}
-      focusBorderColor="green.500"
+      focusBorderColor={colors.green}
       {...field}
     >
       {options.map((option) => (

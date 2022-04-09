@@ -1,7 +1,8 @@
-import { IconButton, Stack, Tooltip, useColorModeValue } from "@chakra-ui/react"
+import { IconButton, Stack, Tooltip } from "@chakra-ui/react"
 import React, { ReactElement, useMemo } from "react"
 import { AiOutlineCalendar } from "react-icons/ai"
 import { Link, useHistory } from "react-router-dom"
+import { colors } from "styles/colors"
 
 interface Item {
   name: string
@@ -11,7 +12,6 @@ interface Item {
 
 export default function Sidebar() {
   const history = useHistory()
-  const borderColor = useColorModeValue("#EDF2F7", "#2D3748")
 
   const items: Item[] = useMemo(
     () => [
@@ -27,8 +27,9 @@ export default function Sidebar() {
   return (
     <Stack
       gridArea="sidebar"
-      borderTop={{ base: `1px solid ${borderColor}`, lg: "0" }}
-      borderRight={{ base: "0", lg: `1px solid ${borderColor}` }}
+      borderTop={{ base: `1px solid ${colors.lightGray}`, lg: "0" }}
+      borderRight={{ base: "0", lg: `1px solid ${colors.lightGray}` }}
+      borderRightColor={colors.lightGray}
       direction={{ base: "row", lg: "column" }}
       spacing="16px"
       alignItems="center"

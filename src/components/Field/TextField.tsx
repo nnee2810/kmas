@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/react"
 import React, { ReactElement } from "react"
 import { ControllerRenderProps } from "react-hook-form"
+import { colors } from "styles/colors"
 import { BaseFieldProps } from "."
 
 interface TextFieldProps extends BaseFieldProps {
@@ -33,7 +34,7 @@ export default function TextField({
         placeholder={placeholder}
         isDisabled={isDisabled}
         isInvalid={isInvalid}
-        focusBorderColor="green.500"
+        focusBorderColor={colors.green}
         {...field}
       />
       {icon?.after && <InputRightElement>{icon?.after}</InputRightElement>}

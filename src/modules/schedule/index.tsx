@@ -7,7 +7,7 @@ import moment, { MomentObjectOutput } from "moment"
 import React, { useCallback, useState } from "react"
 import { userSelector } from "store/reducers/user"
 import { Lesson } from "types/Lesson"
-import ScheduleInDate from "./components/ScheduleInDate"
+import LessonsInDate from "./components/LessonsInDate"
 
 export default function Schedule() {
   const { lessons } = useAppSelector(userSelector)
@@ -40,7 +40,7 @@ export default function Schedule() {
     <HomeLayout>
       <Grid templateColumns={{ base: "auto", lg: "1fr 350px" }} h="100%">
         <Calendar renderCell={renderCell} onChange={onChange} />
-        <ScheduleInDate
+        <LessonsInDate
           date={currentDate}
           lessons={getLessonsInDate(currentDate)}
         />

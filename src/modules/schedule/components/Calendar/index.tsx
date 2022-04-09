@@ -3,6 +3,7 @@ import { Box, Center, Grid, HStack, Text } from "@chakra-ui/layout"
 import moment, { MomentObjectOutput } from "moment"
 import React, { ReactNode, useEffect, useState } from "react"
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs"
+import { colors } from "styles/colors"
 import generateArrayNumber from "utils/generateArrayNumber"
 
 interface CalendarProps {
@@ -91,7 +92,7 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
           <Center
             h="48px"
             borderWidth="1px 0"
-            borderColor="gray.100"
+            borderColor={colors.lightGray}
             borderStyle="solid"
             fontSize="14"
             key={"header" + item}
@@ -104,9 +105,9 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
             h={{ base: "calc(100vw / 7)", md: "110px" }}
             minH="60px"
             borderWidth={(idx + 1) % 7 ? "0 1px 1px 0" : "0 0 1px 0"}
-            borderColor="gray.100"
+            borderColor={colors.lightGray}
             borderStyle="solid"
-            bg={cell.diffMonth ? "gray.100" : ""}
+            bg={cell.diffMonth ? colors.lightGray : ""}
             p="2"
             cursor="pointer"
             transition="background .2s"
@@ -116,7 +117,7 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
             <Center
               fontWeight="500"
               color={cell.diffMonth ? "gray" : cell.isToday ? "white" : "black"}
-              bg={cell.isToday ? "green.500" : ""}
+              bg={cell.isToday ? colors.green : ""}
               borderRadius="50%"
               width="28px"
               height="28px"

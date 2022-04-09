@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { ControllerRenderProps } from "react-hook-form"
 import { AiOutlineCloudUpload } from "react-icons/ai"
+import { colors } from "styles/colors"
 import { BaseFieldProps } from "."
 
 interface FileFieldProps extends BaseFieldProps {
@@ -35,7 +36,7 @@ export default function FileField({
       borderRadius="8"
       px="4"
       py="7px"
-      backgroundColor={isDisabled ? "gray.100" : "transparent"}
+      backgroundColor={isDisabled ? colors.lightGray : "transparent"}
       cursor={isDisabled ? "not-allowed" : "pointer"}
       {...getRootProps()}
     >
