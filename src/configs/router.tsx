@@ -16,16 +16,20 @@ export default function AppRouter() {
   const { loggedIn } = useAppSelector(userSelector)
 
   useEffect(() => {
-    const profile = localStorage.getItem(STORAGE_KEY.PROFILE),
+    let profile = localStorage.getItem(STORAGE_KEY.PROFILE),
       lessons = localStorage.getItem(STORAGE_KEY.LESSONS)
 
-    if (profile && lessons) {
-      dispatch(
-        setLogin({
-          profile: JSON.parse(profile),
-          lessons: JSON.parse(lessons),
-        })
-      )
+    try {
+      if (profile && lessons) {
+        dispatch(
+          setLogin({
+            profile: JSON.parse(profile),
+            lessons: JSON.parse(lessons),
+          })
+        )
+      }
+    } catch (err) {
+      localStorage.clear()
     }
   }, [dispatch])
 
