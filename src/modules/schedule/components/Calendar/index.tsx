@@ -27,13 +27,18 @@ function generateCellValues(current: MomentObjectOutput) {
         value: {
           ...current,
           date: daysInPrevMonth - firstDayInMonth + idx + 1,
+          months: current.months - 1,
         },
         diffMonth: -1,
         isToday: false,
       }
     if (idx - firstDayInMonth >= daysInMonth)
       return {
-        value: { ...current, date: idx - firstDayInMonth - daysInMonth + 1 },
+        value: {
+          ...current,
+          date: idx - firstDayInMonth - daysInMonth + 1,
+          months: current.months + 1,
+        },
         diffMonth: 1,
         isToday: false,
       }
