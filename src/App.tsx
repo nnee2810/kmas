@@ -1,25 +1,37 @@
 import { ChakraProvider } from "@chakra-ui/react"
-import LoadingScreen from "components/LoadingScreen"
-import AppRouter from "configs/router"
-import React, { Suspense } from "react"
+import { AppRoutes, PageLoading } from "components/core"
+import { handleAxiosError } from "helpers/handleAxiosError"
+import "moment/locale/vi"
+import { Suspense } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
+import { BrowserRouter } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      onError: handleAxiosError,
+    },
+    mutations: {
+      onError: handleAxiosError,
+    },
+  },
+})
 
 function App() {
   return (
-    <>
-      <ToastContainer autoClose={2000} />
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider>
-          <Suspense fallback={<LoadingScreen />}>
-            <AppRouter />
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <BrowserRouter>
+          <Suspense fallback={<PageLoading />}>
+            <AppRoutes />
           </Suspense>
-        </ChakraProvider>
-      </QueryClientProvider>
-    </>
+        </BrowserRouter>
+      </ChakraProvider>
+      <ToastContainer autoClose={2000} />
+    </QueryClientProvider>
   )
 }
 
