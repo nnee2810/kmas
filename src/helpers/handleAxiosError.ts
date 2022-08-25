@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 import { Message } from "configs/constants"
-import { toast } from "react-toastify"
+import toast from "react-hot-toast"
 
 export function handleAxiosError(error: unknown) {
   if (error instanceof AxiosError) {

@@ -3,10 +3,7 @@ import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import store, { persistor } from "store"
 import "styles/styles.scss"
-
-import "react-toastify/dist/ReactToastify.css"
 import App from "./App"
-import reportWebVitals from "./reportWebVitals"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
@@ -33,5 +30,3 @@ serviceWorkerRegistration.register({
     }
   },
 })
-
-reportWebVitals()

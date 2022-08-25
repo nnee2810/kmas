@@ -3,7 +3,7 @@ import { useAppSelector } from "hooks/useAppStore"
 import { ILesson } from "interfaces/"
 import { MomentObjectOutput } from "moment"
 import { useCallback, useState } from "react"
-import { toast } from "react-toastify"
+import toast from "react-hot-toast"
 import { userSelector } from "store/reducers/user"
 import { BlinkDot, Calendar, ModalLessonsInToday } from "../components"
 
@@ -36,7 +36,7 @@ export default function Schedule() {
     (date: MomentObjectOutput) => {
       const lessons = getLessons(date)
       if (lessons.length) setLessonsInToday(lessons)
-      else toast.warn("Không có lịch học trong ngày này")
+      else toast.error("Không có lịch học trong ngày này")
     },
     [setLessonsInToday, getLessons],
   )

@@ -3,9 +3,9 @@ import { AppRoutes, PageLoading } from "components/core"
 import { handleAxiosError } from "helpers/handleAxiosError"
 import "moment/locale/vi"
 import { Suspense } from "react"
+import { Toaster } from "react-hot-toast"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { BrowserRouter } from "react-router-dom"
-import { ToastContainer } from "react-toastify"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,7 +30,7 @@ function App() {
           </Suspense>
         </BrowserRouter>
       </ChakraProvider>
-      <ToastContainer autoClose={2000} />
+      <Toaster />
     </QueryClientProvider>
   )
 }
