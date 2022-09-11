@@ -35,7 +35,7 @@ export default function ModalLessonsInToday({
         <ModalBody>
           <Stack>
             {data.map((item) => (
-              <Stack>
+              <Stack key={item.subjectCode}>
                 <Alert status="success" variant="left-accent" borderRadius="6">
                   <Stack spacing="1">
                     <Text fontWeight="500">
