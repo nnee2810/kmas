@@ -3,9 +3,11 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { TextField } from "components/basic"
 import Field from "components/core/Field"
 import { useGetLessons } from "features/auth/hooks/useGetLessons"
+import { getAxiosMessageError } from "helpers"
 import { useAppDispatch } from "hooks/useAppStore"
 import md5 from "md5"
 import { FormProvider, useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -40,22 +42,22 @@ export default function FormSignIn() {
     defaultValues,
     resolver: yupResolver(schema),
   })
-  const { mutate, isLoading } = useGetLessons()
+  const { mutateAsync, isLoading } = useGetLessons()
   const [showPassword, setShowPassword] = useBoolean(false)
 
   const handleSubmit = ({ studentCode, password }: FormValues) => {
     if (isLoading) return
-    mutate(
-      { studentCode, password: md5(password) },
-      {
-        onSuccess(data) {
-          dispatch(setUser(data))
-          navigate("/", {
-            replace: true,
-          })
-        },
+    toast.promise(mutateAsync({ studentCode, password: md5(password) }), {
+      loading: "Đang kiểm tra thông tin",
+      success: (data) => {
+        dispatch(setUser(data))
+        navigate("/", {
+          replace: true,
+        })
+        return "Thông tin hợp lệ"
       },
-    )
+      error: getAxiosMessageError,
+    })
   }
 
   return (

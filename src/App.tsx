@@ -1,6 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { AppRoutes, PageLoading } from "components/core"
-import { handleAxiosError } from "helpers/handleAxiosError"
+import { handleAxiosError } from "helpers"
 import "moment/locale/vi"
 import { Suspense } from "react"
 import { Toaster } from "react-hot-toast"
