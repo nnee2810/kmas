@@ -5,7 +5,6 @@ import Field from "components/core/Field"
 import { useGetLessons } from "features/auth/hooks/useGetLessons"
 import { getAxiosMessageError } from "helpers"
 import { useAppDispatch } from "hooks/useAppStore"
-import md5 from "md5"
 import { FormProvider, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import {
@@ -45,9 +44,9 @@ export default function FormSignIn() {
   const { mutateAsync, isLoading } = useGetLessons()
   const [showPassword, setShowPassword] = useBoolean(false)
 
-  const handleSubmit = ({ studentCode, password }: FormValues) => {
+  const handleSubmit = (values: FormValues) => {
     if (isLoading) return
-    toast.promise(mutateAsync({ studentCode, password: md5(password) }), {
+    toast.promise(mutateAsync(values), {
       loading: "Đang kiểm tra thông tin",
       success: (data) => {
         dispatch(setUser(data))
