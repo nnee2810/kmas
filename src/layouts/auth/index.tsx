@@ -1,11 +1,17 @@
-import { Center } from "@chakra-ui/react"
+import { Center, useColorMode } from "@chakra-ui/react"
+import { useEffect } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 import { useUser } from "store/user"
 
 export default function AuthLayout() {
   const { profile } = useUser()
+  const { setColorMode } = useColorMode()
 
   if (profile) return <Navigate to="/" />
+
+  useEffect(() => {
+    setColorMode("light")
+  }, [setColorMode])
 
   return (
     <Center

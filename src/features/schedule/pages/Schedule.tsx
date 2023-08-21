@@ -2,7 +2,6 @@ import { Box } from "@chakra-ui/layout"
 import { ILesson } from "interfaces/"
 import { MomentObjectOutput } from "moment"
 import { useCallback, useState } from "react"
-import toast from "react-hot-toast"
 import { useUser } from "store/user"
 import { BlinkDot, Calendar, ModalLessonsInToday } from "../components"
 
@@ -35,7 +34,6 @@ export default function Schedule() {
     (date: MomentObjectOutput) => {
       const lessons = getLessons(date)
       if (lessons.length) setLessonsInToday(lessons)
-      else toast.error("Không có lịch học trong ngày này")
     },
     [setLessonsInToday, getLessons],
   )

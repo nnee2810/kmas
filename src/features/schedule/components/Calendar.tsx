@@ -1,5 +1,7 @@
 import { Button } from "@chakra-ui/button"
 import { Box, Center, Grid, HStack, Text } from "@chakra-ui/layout"
+import { useColorMode } from "@chakra-ui/react"
+import clsx from "clsx"
 import moment, { MomentObjectOutput } from "moment"
 import { ReactNode, useEffect, useState } from "react"
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs"
@@ -54,6 +56,7 @@ function generateCellValues(current: MomentObjectOutput) {
   return cellValues
 }
 export default function Calendar({ renderCell, onChange }: CalendarProps) {
+  const { colorMode } = useColorMode()
   const [currentDate, setCurrentDate] = useState(moment().toObject())
   const [cellValues, setCellValues] = useState<CellValue[]>([])
 
@@ -96,10 +99,11 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
         {generateArrayNumber(7).map((item) => (
           <Center
             h="48px"
-            borderWidth="1px 0"
-            borderColor={colors.lightGray}
-            borderStyle="solid"
             fontSize="14"
+            className={clsx(
+              "border-y",
+              colorMode === "dark" ? "border-gray-700" : "border-gray-200",
+            )}
             key={"header" + item}
           >
             {!item ? "CN" : `T${item + 1}`}
@@ -110,23 +114,37 @@ export default function Calendar({ renderCell, onChange }: CalendarProps) {
             h={{ base: "calc(100vw / 7)", md: "110px" }}
             minH="60px"
             borderWidth={(idx + 1) % 7 ? "0 1px 1px 0" : "0 0 1px 0"}
-            borderColor={colors.lightGray}
             borderStyle="solid"
-            bg={cell.diffMonth ? colors.lightGray : ""}
             p="2"
             cursor="pointer"
             transition="background .2s"
+            className={clsx(
+              colorMode === "dark" ? "border-gray-700" : "border-gray-200",
+              cell.diffMonth
+                ? colorMode === "dark"
+                  ? "bg-gray-700"
+                  : "bg-gray-200"
+                : "",
+            )}
             onClick={() => handleClickCell(cell.value.date, cell.diffMonth)}
             key={"cell" + idx}
           >
             <Center
               fontWeight="500"
-              color={cell.diffMonth ? "gray" : cell.isToday ? "white" : "black"}
               bg={cell.isToday ? colors.green : ""}
               borderRadius="50%"
               width="28px"
               height="28px"
               fontSize="14"
+              className={clsx(
+                colorMode === "dark"
+                  ? cell.diffMonth
+                    ? "text-gray-400"
+                    : "text-white"
+                  : cell.isToday
+                  ? "text-white"
+                  : "text-black",
+              )}
             >
               <Text>{cell.value.date}</Text>
             </Center>

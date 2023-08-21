@@ -1,8 +1,8 @@
-import { Center, Stack, Tooltip } from "@chakra-ui/react"
+import { Center, Stack, Tooltip, useColorMode } from "@chakra-ui/react"
+import clsx from "clsx"
 import { ReactElement } from "react"
 import { AiOutlineCalendar } from "react-icons/ai"
 import { Link, useLocation } from "react-router-dom"
-import { colors } from "styles/colors"
 
 interface SidebarItem {
   label: string
@@ -20,13 +20,15 @@ const sidebarItems: SidebarItem[] = [
 
 export default function Sidebar() {
   const location = useLocation()
+  const { colorMode } = useColorMode()
 
   return (
     <Stack
       gridArea="sidebar"
-      borderTop={{ base: `1px solid ${colors.lightGray}`, lg: "0" }}
-      borderRight={{ base: "0", lg: `1px solid ${colors.lightGray}` }}
-      borderRightColor={colors.lightGray}
+      className={clsx(
+        "border-solid border-t lg:border-t-0 lg:border-r ",
+        colorMode === "dark" ? "border-gray-700" : "border-gray-200",
+      )}
       direction={{ base: "row", lg: "column" }}
       spacing="16px"
       alignItems="center"
