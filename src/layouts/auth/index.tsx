@@ -1,10 +1,9 @@
 import { Center } from "@chakra-ui/react"
-import { useAppSelector } from "hooks/useAppStore"
 import { Navigate, Outlet } from "react-router-dom"
-import { userSelector } from "store/reducers/user"
+import { useUser } from "store/user"
 
 export default function AuthLayout() {
-  const { profile } = useAppSelector(userSelector)
+  const { profile } = useUser()
 
   if (profile) return <Navigate to="/" />
 

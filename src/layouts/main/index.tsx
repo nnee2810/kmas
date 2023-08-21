@@ -1,12 +1,11 @@
 import { Grid, GridItem } from "@chakra-ui/react"
-import { useAppSelector } from "hooks/useAppStore"
 import { Navigate, Outlet } from "react-router-dom"
-import { userSelector } from "store/reducers/user"
+import { useUser } from "store/user"
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 
 export default function MainLayout() {
-  const { profile } = useAppSelector(userSelector)
+  const { profile } = useUser()
 
   if (!profile) return <Navigate to="/auth/sign-in" />
 

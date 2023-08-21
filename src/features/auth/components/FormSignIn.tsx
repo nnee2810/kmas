@@ -4,7 +4,6 @@ import { TextField } from "components/basic"
 import Field from "components/core/Field"
 import { useGetLessons } from "features/auth/hooks/useGetLessons"
 import { getAxiosMessageError } from "helpers"
-import { useAppDispatch } from "hooks/useAppStore"
 import { FormProvider, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import {
@@ -14,7 +13,7 @@ import {
 } from "react-icons/ai"
 import { FiLock } from "react-icons/fi"
 import { useNavigate } from "react-router-dom"
-import { setUser } from "store/reducers/user"
+import { useUser } from "store/user"
 import * as yup from "yup"
 
 interface FormValues {
@@ -36,7 +35,7 @@ const schema = yup.object().shape({
 })
 export default function FormSignIn() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const { setUser } = useUser()
   const methods = useForm<FormValues>({
     defaultValues,
     resolver: yupResolver(schema),
@@ -49,7 +48,7 @@ export default function FormSignIn() {
     toast.promise(mutateAsync(values), {
       loading: "Đang kiểm tra thông tin",
       success: (data) => {
-        dispatch(setUser(data))
+        setUser(data)
         navigate("/", {
           replace: true,
         })

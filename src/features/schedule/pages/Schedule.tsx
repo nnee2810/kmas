@@ -1,14 +1,13 @@
 import { Box } from "@chakra-ui/layout"
-import { useAppSelector } from "hooks/useAppStore"
 import { ILesson } from "interfaces/"
 import { MomentObjectOutput } from "moment"
 import { useCallback, useState } from "react"
 import toast from "react-hot-toast"
-import { userSelector } from "store/reducers/user"
+import { useUser } from "store/user"
 import { BlinkDot, Calendar, ModalLessonsInToday } from "../components"
 
 export default function Schedule() {
-  const { lessons } = useAppSelector(userSelector)
+  const { lessons } = useUser()
   const [lessonsInToday, setLessonsInToday] = useState<ILesson[]>([])
 
   const getLessons = useCallback(
