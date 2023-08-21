@@ -6,13 +6,11 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
-import { useAppDispatch, useAppSelector } from "hooks/useAppStore"
 import { IoLogOutOutline } from "react-icons/io5"
-import { signOut, userSelector } from "store/reducers/user"
+import { useUser } from "store/user"
 
 export default function MenuUser() {
-  const dispatch = useAppDispatch()
-  const { profile } = useAppSelector(userSelector)
+  const { profile, clearUser } = useUser()
 
   return (
     <Menu>
@@ -29,10 +27,7 @@ export default function MenuUser() {
         />
       </MenuButton>
       <MenuList>
-        <MenuItem
-          icon={<IoLogOutOutline fontSize="20" />}
-          onClick={() => dispatch(signOut())}
-        >
+        <MenuItem icon={<IoLogOutOutline fontSize="20" />} onClick={clearUser}>
           Đăng xuất
         </MenuItem>
       </MenuList>
