@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button"
 import { Box, Center, Grid, HStack, Text } from "@chakra-ui/layout"
 import moment, { MomentObjectOutput } from "moment"
-import React, { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs"
 import { colors } from "styles/colors"
 import generateArrayNumber from "utils/generateArrayNumber"
@@ -47,7 +47,7 @@ function generateCellValues(current: MomentObjectOutput) {
       diffMonth: 0,
       isToday: today.isSame(
         { ...current, date: idx - firstDayInMonth + 1 },
-        "day"
+        "day",
       ),
     }
   })

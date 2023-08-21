@@ -1,17 +1,6 @@
-* {
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  // ::-webkit-scrollbar-track {
-  // }
-  ::-webkit-scrollbar-thumb {
-    background: #cfcfcf;
-    &:hover {
-      background: #bfbfbf;
-    }
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
