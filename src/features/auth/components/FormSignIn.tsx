@@ -1,4 +1,5 @@
-import { Box, Button, Link, Stack, Text, useBoolean } from "@chakra-ui/react"
+import { useBoolean } from "@chakra-ui/hooks"
+import { Box, Button, Link, Stack, Text } from "@chakra-ui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { TextField } from "components/basic"
 import Field from "components/core/Field"
@@ -21,11 +22,7 @@ interface FormValues {
   password: string
 }
 
-const defaultValues: FormValues = {
-  studentCode: "",
-  password: "",
-}
-const schema = yup.object().shape({
+const schema = yup.object({
   studentCode: yup
     .string()
     .required("Mã sinh viên không được để trống")
@@ -33,11 +30,12 @@ const schema = yup.object().shape({
     .max(10, "Mã sinh viên không hợp lệ"),
   password: yup.string().required("Mật khẩu không được để trống"),
 })
+
 export default function FormSignIn() {
   const navigate = useNavigate()
   const { setUser } = useUser()
   const methods = useForm<FormValues>({
-    defaultValues,
+    defaultValues: { studentCode: "", password: "" },
     resolver: yupResolver(schema),
   })
   const { mutateAsync, isLoading } = useGetLessons()
